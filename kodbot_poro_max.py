@@ -31,23 +31,36 @@ from typing import Optional, Dict, List, Any
 # ─────────────────────────────────────────────
 #  پیکربندی اصلی
 # ─────────────────────────────────────────────
-TOKEN = os.getenv("BOT_TOKEN", "536924748:4BgyJ46g4hPQG8cfU3ezV4NFUy5XujVJKXY")
+# ─────────────────────────────────────────────
+#  پیکربندی اصلی و متغیرهای محیطی برای ریلوای
+# ─────────────────────────────────────────────
+TOKEN = os.getenv("BOT_TOKEN")  
 BASE_URL = f"https://tapi.bale.ai/bot{TOKEN}"
+
 ADMIN_IDS = [int(x) for x in os.getenv("ADMIN_IDS", "2063033830").split(",")]
 PAYMENT_TOKEN = os.getenv("PAYMENT_TOKEN", "WALLET-TEST-1111111111111111")
 CHANNEL_USERNAME = "@koddan"
 INVITE_BASE = "https://bale.ir/kodbot?start="
 REQUIRED_INVITES = 5
 
-DB_PATH = "kodbot_pororjrhmaxsing.db"
-BOTS_DIR = Path("deploydjhred_bots")
-LOGS_DIR = Path("botndnd_logs")
-LIBS_DIR = Path("crjjdnustom_libs")
+# ─────────────────────────────────────────────
+#  تنظیم مسیرها بر اساس دیسک پایدار ریلوای (/app/data)
+# ─────────────────────────────────────────────
+DATA_DIR = Path("/app/data")
+DATA_DIR.mkdir(exist_ok=True)
+
+DB_PATH = str(DATA_DIR / "kodbot_pororjrhmaxsing.db")
+BOTS_DIR = DATA_DIR / "deploydjhred_bots"
+LOGS_DIR = DATA_DIR / "botndnd_logs"
+LIBS_DIR = DATA_DIR / "crjjdnustom_libs"
 
 BOTS_DIR.mkdir(exist_ok=True)
 LOGS_DIR.mkdir(exist_ok=True)
 LIBS_DIR.mkdir(exist_ok=True)
 
+# ─────────────────────────────────────────────
+#  تنظیمات لاگر
+# ─────────────────────────────────────────────
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
