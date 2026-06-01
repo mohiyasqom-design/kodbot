@@ -40,7 +40,7 @@ BASE_URL = f"https://tapi.bale.ai/bot{TOKEN}"
 ADMIN_IDS = [int(x) for x in os.getenv("ADMIN_IDS", "2063033830").split(",")]
 PAYMENT_TOKEN = os.getenv("PAYMENT_TOKEN", "WALLET-TEST-1111111111111111")
 CHANNEL_USERNAME = "@koddan"
-INVITE_BASE = "https://bale.ir/kodbot?start="
+INVITE_BASE = "https://ble.ir/kodbot?start="
 REQUIRED_INVITES = 1
 
 # ─────────────────────────────────────────────
