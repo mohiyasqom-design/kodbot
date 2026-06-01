@@ -41,7 +41,7 @@ ADMIN_IDS = [int(x) for x in os.getenv("ADMIN_IDS", "2063033830").split(",")]
 PAYMENT_TOKEN = os.getenv("PAYMENT_TOKEN", "WALLET-TEST-1111111111111111")
 CHANNEL_USERNAME = "@koddan"
 INVITE_BASE = "https://bale.ir/kodbot?start="
-REQUIRED_INVITES = 5
+REQUIRED_INVITES = 1
 
 # ─────────────────────────────────────────────
 #  تنظیم مسیرها بر اساس دیسک پایدار ریلوای (/app/data)
