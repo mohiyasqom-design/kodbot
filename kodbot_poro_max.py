@@ -941,7 +941,7 @@ def handle_start(message: dict, payload: str = ""):
             f"👋 *{full_name} عزیز خوش آمدید!*\n\n"
             f"برای فعال‌سازی ربات، باید در کانال ما عضو شوید:",
             reply_markup=inline_keyboard([
-                [("📢 عضویت در کانال", "url", f"https://ble.ai/{CHANNEL_USERNAME[1:]}")],
+                [("📢 عضویت در کانال", "url", f"https://bale.ai/{CHANNEL_USERNAME[1:]}")],
                 [("✅ عضو شدم", "joined_channel")]
             ])
         )
