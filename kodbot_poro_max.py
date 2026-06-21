@@ -217,117 +217,99 @@ logging.basicConfig(
 log = logging.getLogger("PoroBot")
 
 # ─────────────────────────────────────────────
-#  سطوح کاربری
+#  سطوح کاربری و محدودیت‌ها (بهبود‌شده)
 # ─────────────────────────────────────────────
 PLANS = {
     "free": {
         "name": "🟢 رایگان",
+        # ربات‌ها
         "max_bots": 1,
         "max_code_lines": 50,
         "max_memory_mb": 50,
         "max_libraries": 1,
+        # وب دستیار
+        "max_web_projects": 0,
+        "web_assistant": False,
+        # لاگ و پشتیبانی
         "log_retention_days": 1,
-        "support_level": "معمولی (پاسخ در ۲۴ ساعت)",
+        "support_level": "معمولی",
+        "max_support_tickets": 2,
+        # درایو و بند‌پهنا
         "monthly_bandwidth_gb": 1,
         "max_concurrent_connections": 2,
+        # uptime و قابلیت‌ها
         "bot_uptime_hours": 240,
-        "auto_recovery": True,
+        "auto_recovery": False,
         "powerful_terminal": False,
         "custom_library": False,
         "personal_mirror": False,
         "processing_priority": "low",
+        # درآمد
         "max_discount_codes": 0,
         "subscriptions": {
             "monthly": {"price": 0, "gift_points": 10, "max_buy": 1}
         }
     },
     "basic": {
-        "name": "🟡 پایه",
+        "name": "🔵 پایه",
+        # ربات‌ها
         "max_bots": 3,
-        "max_code_lines": 200,
-        "max_memory_mb": 100,
+        "max_code_lines": 500,
+        "max_memory_mb": 150,
         "max_libraries": 10,
+        # وب دستیار
+        "max_web_projects": 3,
+        "web_assistant": True,
+        # لاگ و پشتیبانی
         "log_retention_days": 7,
-        "support_level": "سریع (پاسخ در ۱۲ ساعت)",
-        "monthly_bandwidth_gb": 5,
+        "support_level": "سریع",
+        "max_support_tickets": 10,
+        # درایو و بند‌پهنا
+        "monthly_bandwidth_gb": 10,
         "max_concurrent_connections": 5,
+        # uptime و قابلیت‌ها
         "bot_uptime_hours": 720,
         "auto_recovery": True,
         "powerful_terminal": True,
-        "custom_library": False,
+        "custom_library": True,
         "personal_mirror": True,
-        "processing_priority": "medium",
-        "max_discount_codes": 1,
-        "extra_costs": {
-            "bandwidth_gb": 8000,
-            "memory_mb": 1500,
-            "extra_bot": 25000,
-            "extra_code_line": 500
-        },
+        "processing_priority": "normal",
+        # درآمد
+        "max_discount_codes": 5,
         "subscriptions": {
-            "monthly": {"price": 50000, "gift_points": 120, "max_buy": 3},
-            "quarterly": {"price": 150000, "gift_points": 250, "max_buy": 3},
-            "biannual": {"price": 300000, "gift_points": 450, "max_buy": 2},
-            "annual": {"price": 600000, "gift_points": 800, "max_buy": 1}
-        },
-        "mandatory_upgrade": {
-            "enabled": True,
-            "condition": "buy_3_basic",
-            "target_plan": "professional"
+            "monthly": {"price": 50000, "gift_points": 120, "max_buy": 12},
+            "yearly": {"price": 600000, "gift_points": 1500, "max_buy": 1}
         }
     },
     "professional": {
         "name": "🔴 حرفه‌ای",
+        # ربات‌ها
         "max_bots": 10,
-        "max_code_lines": -1,
-        "max_memory_mb": 1024,
-        "max_libraries": -1,
+        "max_code_lines": 999999,
+        "max_memory_mb": 500,
+        "max_libraries": 999,
+        # وب دستیار
+        "max_web_projects": 999,
+        "web_assistant": True,
+        # لاگ و پشتیبانی
         "log_retention_days": 30,
-        "support_level": "ویژه (پاسخ در ۶ ساعت)",
-        "monthly_bandwidth_gb": 20,
-        "max_concurrent_connections": 15,
-        "bot_uptime_hours": -1,
+        "support_level": "فوری",
+        "max_support_tickets": 999,
+        # درایو و بند‌پهنا
+        "monthly_bandwidth_gb": 100,
+        "max_concurrent_connections": 20,
+        # uptime و قابلیت‌ها
+        "bot_uptime_hours": 999,
         "auto_recovery": True,
         "powerful_terminal": True,
         "custom_library": True,
         "personal_mirror": True,
         "processing_priority": "high",
-        "max_discount_codes": 2,
-        "extra_costs": {
-            "bandwidth_gb": 6000,
-            "memory_mb": 1200,
-            "extra_bot": 20000,
-            "extra_code_line": 0
-        },
+        # درآمد
+        "max_discount_codes": 999,
         "subscriptions": {
-            "monthly": {"price": 150000, "gift_points": 200, "max_buy": 3},
-            "quarterly": {"price": 450000, "gift_points": 400, "max_buy": 2},
-            "biannual": {"price": 900000, "gift_points": 650, "max_buy": 2},
-            "annual": {"price": 1800000, "gift_points": 950, "max_buy": 1}
-        }
-    },
-    "enterprise": {
-        "name": "⚫ سازمانی",
-        "max_bots": -1,
-        "max_code_lines": -1,
-        "max_memory_mb": 4096,
-        "max_libraries": -1,
-        "log_retention_days": 90,
-        "support_level": "۲۴/۷ (پاسخ فوری)",
-        "monthly_bandwidth_gb": 100,
-        "max_concurrent_connections": -1,
-        "bot_uptime_hours": -1,
-        "auto_recovery": True,
-        "powerful_terminal": True,
-        "custom_library": True,
-        "personal_mirror": True,
-        "processing_priority": "critical",
-        "max_discount_codes": 5,
-        "subscriptions": {
-            "monthly": {"price": -1, "gift_points": 300},
-            "quarterly": {"price": -1, "gift_points": 500},
-            "biannual": {"price": -1, "gift_points": 750},
-            "annual": {"price": -1, "gift_points": 1000}
+            "monthly": {"price": 200000, "gift_points": 500, "max_buy": 12},
+            "yearly": {"price": 2400000, "gift_points": 6000, "max_buy": 1}
         }
     }
 }
@@ -335,28 +317,28 @@ PLANS = {
 SHOP_ITEMS = {
     "extra_bot": {
         "name": "🤖 ربات اضافه",
-        "desc": "افزایش سقف تعداد ربات‌های قابل استقرار",
-        "points": {"free": None, "basic": 25, "professional": 15, "enterprise": 5}
+        "desc": "افزایش سقف تعداد ربات‌ها",
+        "points": {"free": None, "basic": 25, "professional": 15}
     },
     "extra_memory": {
         "name": "💾 حافظه اضافی",
-        "desc": "افزایش سقف حافظه (۱۰۰ مگابایت)",
-        "points": {"free": None, "basic": 15, "professional": 10, "enterprise": 3}
+        "desc": "۱۰۰ مگابایت حافظه",
+        "points": {"free": None, "basic": 15, "professional": 10}
     },
     "extra_log": {
         "name": "📋 لاگ اضافی",
-        "desc": "افزایش مدت نگهداری لاگ (۷ روز)",
-        "points": {"free": None, "basic": 10, "professional": 7, "enterprise": 2}
+        "desc": "۷ روز لاگ اضافی",
+        "points": {"free": None, "basic": 10, "professional": 7}
     },
     "extra_library": {
         "name": "📦 کتابخانه اضافی",
-        "desc": "افزایش سقف تعداد کتابخانه‌های قابل نصب",
-        "points": {"free": None, "basic": 8, "professional": 5, "enterprise": 1}
+        "desc": "افزایش سقف کتابخانه‌ها",
+        "points": {"free": None, "basic": 8, "professional": 5}
     },
     "extra_bandwidth": {
-        "name": "🌐 پهنای باند اضافی",
-        "desc": "افزایش سقف پهنای باند ماهانه (۱ گیگابایت)",
-        "points": {"free": None, "basic": 20, "professional": 12, "enterprise": 4}
+        "name": "🌐 بند‌پهنا اضافی",
+        "desc": "۱ گیگابایت بند‌پهنا",
+        "points": {"free": None, "basic": 20, "professional": 12}
     }
 }
 
@@ -427,6 +409,87 @@ def init_db():
         lib_key TEXT UNIQUE,
         mappings TEXT DEFAULT '{}',
         file_path TEXT DEFAULT NULL,
+        created_at TEXT DEFAULT NULL,
+        FOREIGN KEY(user_id) REFERENCES users(user_id)
+    );
+
+    CREATE TABLE IF NOT EXISTS web_projects (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        project_name TEXT NOT NULL,
+        description TEXT DEFAULT '',
+        html_code TEXT DEFAULT '<html><head><title>پروژه</title></head><body></body></html>',
+        css_code TEXT DEFAULT 'body { margin: 0; padding: 20px; font-family: Arial; }',
+        js_code TEXT DEFAULT '// کد جاوااسکریپت خود را اینجا وارد کنید',
+        created_at TEXT DEFAULT NULL,
+        updated_at TEXT DEFAULT NULL,
+        FOREIGN KEY(user_id) REFERENCES users(user_id)
+    );
+
+    CREATE TABLE IF NOT EXISTS web_project_versions (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        project_id INTEGER NOT NULL,
+        version_number INTEGER DEFAULT 1,
+        html_code TEXT,
+        css_code TEXT,
+        js_code TEXT,
+        created_at TEXT DEFAULT NULL,
+        FOREIGN KEY(project_id) REFERENCES web_projects(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS web_groups (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        group_name TEXT NOT NULL,
+        owner_id INTEGER NOT NULL,
+        description TEXT DEFAULT '',
+        is_public INTEGER DEFAULT 0,
+        created_at TEXT DEFAULT NULL,
+        updated_at TEXT DEFAULT NULL,
+        FOREIGN KEY(owner_id) REFERENCES users(user_id)
+    );
+
+    CREATE TABLE IF NOT EXISTS web_project_shares (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        project_id INTEGER NOT NULL,
+        group_id INTEGER,
+        shared_user_id INTEGER,
+        permission TEXT DEFAULT 'view',
+        shared_at TEXT DEFAULT NULL,
+        FOREIGN KEY(project_id) REFERENCES web_projects(id),
+        FOREIGN KEY(group_id) REFERENCES web_groups(id),
+        FOREIGN KEY(shared_user_id) REFERENCES users(user_id)
+    );
+
+    CREATE TABLE IF NOT EXISTS web_templates (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        template_name TEXT NOT NULL,
+        description TEXT DEFAULT '',
+        html_code TEXT,
+        css_code TEXT,
+        js_code TEXT,
+        category TEXT DEFAULT 'general',
+        is_public INTEGER DEFAULT 1,
+        created_at TEXT DEFAULT NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS bot_resource_usage (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        bot_id INTEGER NOT NULL,
+        cpu_percent REAL DEFAULT 0,
+        memory_mb REAL DEFAULT 0,
+        timestamp TEXT DEFAULT NULL,
+        FOREIGN KEY(bot_id) REFERENCES deployed_bots(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS enterprise_requests (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        company_name TEXT NOT NULL,
+        description TEXT DEFAULT '',
+        user_count INTEGER DEFAULT 1,
+        status TEXT DEFAULT 'pending',
+        payment_status TEXT DEFAULT 'pending',
+        payment_amount INTEGER DEFAULT 0,
         created_at TEXT DEFAULT NULL,
         FOREIGN KEY(user_id) REFERENCES users(user_id)
     );
@@ -985,19 +1048,7 @@ def check_activation(user_id: int) -> tuple:
 # ─────────────────────────────────────────────
 #  منوی اصلی
 # ─────────────────────────────────────────────
-def main_menu(user_id: int) -> dict:
-    buttons = [
-        [("🤖 مدیریت ربات‌ها", "bots_menu"), ("🚀 استقرار ربات جدید", "deploy_new")],
-        [("📦 نصب کتابخانه", "install_lib"), ("🏪 فروشگاه آیتم", "shop_menu")],
-        [("💳 خرید اشتراک", "sub_menu"), ("🎯 امتیازها", "points_menu")],
-        [("🏆 کاربران برتر", "top_users"), ("🎟 چالش‌های کد", "challenges")],
-        [("📊 آمار شخصی", "my_stats"), ("🎪 قرعه‌کشی", "lottery_menu")],
-        [("🎫 تیکت پشتیبانی", "ticket_menu"), ("🔑 کتابخانه اختصاصی", "custom_lib")],
-        [("🔗 لینک دعوت", "my_invite"), ("👤 پروفایل من", "my_profile")],
-    ]
-    if is_admin(user_id):
-        buttons.append([("⚙️ پنل مدیریت", "admin_panel")])
-    return inline_keyboard(buttons)
+
 
 
 # ─────────────────────────────────────────────
@@ -1085,7 +1136,7 @@ def handle_bots_menu(query: dict):
             chat_id, msg_id,
             "🤖 *ربات‌های شما*\n\nهنوز هیچ ربات مستقری ندارید.",
             reply_markup=inline_keyboard([
-                [("🚀 استقرار ربات جدید", "deploy_new")],
+                [("🚀 استقرار", "deploy_new")],
                 [("🔙 بازگشت", "main_menu")]
             ])
         )
@@ -1236,7 +1287,7 @@ def handle_deploy_name(message: dict):
         send_message(chat_id, "❌ نام ربات معتبر نیست. دوباره وارد کنید:")
         return
 
-    set_state(user_id, "deploy_waiting_file", {"bot_name": bot_name})
+    set_state(user_id, "deploy_file", {"bot_name": bot_name})
     send_message(
         chat_id,
         f"✅ نام ربات: *{bot_name}*\n\n"
@@ -1279,13 +1330,27 @@ def handle_deploy_file(message: dict):
         f.write(r.content)
 
     if file_name.endswith(".py"):
-        # بررسی تعداد خطوط کد
+        # بررسی امنیتی: جلوگیری از کدهای قدیمی "codebat"
         try:
             with open(local_path, "r", encoding="utf-8", errors="ignore") as f:
-                lines = f.readlines()
+                code_content = f.read()
+                lines = code_content.splitlines()
         except Exception:
             lines = []
+            code_content = ""
+        
+        # ⛔ بررسی مسیر "codebat" یا "/app/data" یا "/mnt/data"
+        if "codebat" in code_content.lower() or "/app/data" in code_content or "/mnt/data" in code_content:
+            send_message(
+                chat_id,
+                "❌ *کد مشکل امنیتی دارد.*\n\n"
+                "کد شما شامل مسیرهای سرور قدیم است.\n"
+                "لطفاً کد خود را بروزرسانی کنید و دوباره ارسال کنید."
+            )
+            shutil.rmtree(bot_dir)
+            return
 
+        # بررسی تعداد خطوط کد
         u = get_user(user_id)
         plan = PLANS.get(u["plan"] if u else "free", PLANS["free"])
         max_lines = plan["max_code_lines"]
@@ -1313,7 +1378,7 @@ def handle_deploy_file(message: dict):
             f"(مثلاً فایل config، requirements.txt و ...)\n\n"
             f"اگر نه، روی «ارسال درخواست» بزنید:",
             reply_markup=inline_keyboard([
-                [("📤 ارسال درخواست به مدیر", "deploy_submit")],
+                [("📤 درخواست", "deploy_submit")],
                 [("❌ انصراف", "main_menu")]
             ])
         )
@@ -1322,15 +1387,14 @@ def handle_deploy_file(message: dict):
         current_state = get_state(user_id)
         extra_files = current_state["data"].get("extra_files", [])
         extra_files.append(str(local_path))
-        set_state(user_id, current_state["state"], {
-            **current_state["data"],
-            "extra_files": extra_files
-        })
+        new_data = current_state["data"].copy()
+        new_data["extra_files"] = extra_files
+        set_state(user_id, current_state["state"], new_data)
         send_message(
             chat_id,
             f"✅ فایل *{file_name}* اضافه شد.\nمی‌توانید فایل بیشتری ارسال کنید یا درخواست را ثبت کنید:",
             reply_markup=inline_keyboard([
-                [("📤 ارسال درخواست به مدیر", "deploy_submit")],
+                [("📤 درخواست", "deploy_submit")],
                 [("❌ انصراف", "main_menu")]
             ])
         )
@@ -1342,7 +1406,7 @@ def handle_deploy_submit(query: dict):
     msg_id = query["message"]["message_id"]
     state = get_state(user_id)
 
-    if state["state"] not in ("deploy_confirm", "deploy_waiting_file"):
+    if state["state"] not in ("deploy_confirm", "deploy_file"):
         answer_callback(query["id"], "وضعیت نامعتبر!", True)
         return
 
@@ -1604,6 +1668,23 @@ def generate_html_log(bot_name: str, log_lines: list) -> str:
 def start_bot_process(bot_id: int, file_path: str, bot_name: str, user_id: int, is_auto_restart: bool = False) -> Optional[str]:
     """راه‌اندازی فرآیند ربات - پشتیبانی از راه‌اندازی مجدد خودکار"""
     try:
+        # ⛔ جلوگیری از اجرای ربات‌های ریلوای قدیم
+        if "/app/data" in file_path or "/mnt/data" in file_path:
+            error_msg = (
+                f"❌ ربات *{bot_name}* از نسخه قدیم است!\n\n"
+                f"این ربات مسیری دارد که از سرور قدیم (ریلوای) است.\n"
+                f"لطفاً ربات را حذف کنید و دوباره استقرار دهید.\n\n"
+                f"🗑 دکمه حذف را بزنید تا از سیستم خارج شود."
+            )
+            send_message(user_id, error_msg)
+            with get_db() as conn:
+                conn.execute(
+                    "UPDATE deployed_bots SET status='error' WHERE id=?",
+                    (bot_id,)
+                )
+                conn.commit()
+            return None
+        
         # بررسی تعداد تلاش‌های راه‌اندازی مجدد
         restart_count = bot_restart_count.get(bot_id, 0)
         last_restart_time = bot_last_restart.get(bot_id, 0)
@@ -1749,6 +1830,12 @@ def watchdog_monitor():
             
             for bot in active_bots:
                 bot_id = bot["id"]
+                
+                # ⛔ اگر ربات مسیر ریلوای قدیم دارد، آن را نادیده بگیر
+                if "/app/data" in bot["file_path"] or "/mnt/data" in bot["file_path"]:
+                    log.warning(f"ربات {bot_id} مسیر قدیم دارد. نادیده گرفته می‌شود.")
+                    continue
+                
                 proc = bot_processes.get(bot_id)
                 
                 # بررسی اینکه فرآیند هنوز در حال اجرا است یا نه
@@ -1824,7 +1911,7 @@ def handle_install_lib(query: dict):
     set_state(user_id, "install_lib_name")
     buttons = [[("❌ انصراف", "main_menu")]]
     if mirror_allowed:
-        buttons.insert(0, [("🌐 استفاده از میرور", "set_mirror")])
+        buttons.insert(0, [("🌐 میرور", "set_mirror")])
 
     edit_message(
         chat_id, msg_id,
@@ -1916,7 +2003,7 @@ def handle_admin_approve_lib(query: dict, req_id: int):
         cmd = [sys.executable, "-m", "pip", "install", lib_name]
         if mirror:
             cmd.extend(["-i", mirror])
-        cmd.append("--break-system-packages")
+        cmd.append("break-system-packages")
 
         try:
             result = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
@@ -2017,7 +2104,7 @@ def auto_install_bot_requirements(bot_id: int, file_path: str, user_id: int):
         for lib in libs_to_install:
             try:
                 cmd = [sys.executable, "-m", "pip", "install", lib,
-                       "--break-system-packages", "-q", "--disable-pip-version-check"]
+                       "break-system-packages", "-q", "disable-pip-version-check"]
                 result = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
                 if result.returncode == 0:
                     installed.append(lib)
@@ -2933,7 +3020,7 @@ def handle_ticket_menu(query: dict):
         chat_id, msg_id,
         text,
         reply_markup=inline_keyboard([
-            [("✏️ ارسال تیکت جدید", "new_ticket")],
+            [("✏️ تیکت", "new_ticket")],
             [("🔙 بازگشت", "main_menu")]
         ])
     )
@@ -3246,7 +3333,7 @@ def handle_custom_lib(query: dict):
             text += f"📚 {l['lib_name']} (کلید: `{l['lib_key']}`)\n"
 
     buttons = [
-        [("➕ کتابخانه جدید", "new_custom_lib"), ("🔑 استفاده از کلید", "use_lib_key")],
+        [("➕ کتابخانه جدید", "new_custom_lib"), ("🔑 کلید", "use_lib_key")],
         [("🔙 بازگشت", "main_menu")]
     ]
     edit_message(chat_id, msg_id, text, reply_markup=inline_keyboard(buttons))
@@ -3376,7 +3463,7 @@ def handle_points_menu(query: dict):
 
     edit_message(chat_id, msg_id, text, reply_markup=inline_keyboard([
         [("🏪 فروشگاه آیتم", "shop_menu"), ("🎪 قرعه‌کشی", "lottery_menu")],
-        [("🎟 دریافت کد تخفیف با امتیاز", "redeem_points_discount")],
+        [("🎟 تخفیف", "redeem_points_discount")],
         [("🔙 بازگشت", "main_menu")]
     ]))
 
@@ -3398,7 +3485,7 @@ def handle_discount_panel(query: dict):
         reply_markup=inline_keyboard([
             [("➕ کد تخفیف ویژه", "create_discount:special")],
             [("⏰ کد تخفیف ساعتی", "create_discount:hourly")],
-            [("📅 کد تخفیف مناسبتی", "create_discount:occasion")],
+            [("📅 تخفیف", "create_discount:occasion")],
             [("📋 لیست کدها", "list_discounts")],
             [("🔙 پنل مدیریت", "admin_panel")]
         ])
@@ -3604,8 +3691,8 @@ def handle_admin_settings(query: dict):
         f"📢 کانال فعلی: `{current_channel}`\n"
         f"👥 دعوت لازم: `{current_invites}`",
         reply_markup=inline_keyboard([
-            [("📢 تغییر کانال", "change_channel"), ("🔗 تغییر لینک دعوت", "change_invite_base")],
-            [("👥 تعداد نیاز دعوت", "change_required_invites")],
+            [("📢 تغییر کانال", "change_channel"), ("🔗 لینک", "change_invite_base")],
+            [("👥 دعوت", "change_required_invites")],
             [("💰 تغییر قیمت‌ها", "change_prices")],
             [("🔙 پنل مدیریت", "admin_panel")]
         ])
@@ -3962,7 +4049,7 @@ def generate_colored_terminal_pdf(bot_id: int, user_id: int):
 
     try:
         subprocess.run(
-            ["wkhtmltopdf", "--page-size", "A4", str(html_path), str(pdf_path)],
+            ["wkhtmltopdf", "page-size", "A4", str(html_path), str(pdf_path)],
             capture_output=True, timeout=60
         )
     except FileNotFoundError:
@@ -4399,6 +4486,76 @@ def handle_callback_query(update: dict):
     elif data == "use_lib_key":
         set_state(user_id, "use_lib_key")
         send_message(chat_id, "🔑 کلید کتابخانه اختصاصی را وارد کنید:")
+    
+    # ─── دستیار وب ───
+    elif data == "web_assistant_menu":
+        handle_web_assistant_menu(query)
+    elif data == "web_manage_projects":
+        handle_web_manage_projects(query)
+    elif data == "web_new_project":
+        handle_web_new_project(query)
+    elif data.startswith("web_template:"):
+        template_type = data.split(":")[1]
+        handle_web_new_project_with_template(query, template_type)
+    elif data.startswith("web_edit_project:"):
+        project_id = int(data.split(":")[1])
+        handle_web_edit_project(query, project_id)
+    elif data == "web_edit_html":
+        handle_web_edit_html(query)
+    elif data == "web_add_text":
+        handle_web_add_text(query)
+    elif data == "web_edit_css":
+        handle_web_edit_css(query)
+    elif data == "web_edit_js":
+        handle_web_edit_js(query)
+    elif data == "web_preview":
+        handle_web_preview(query)
+    elif data == "web_download":
+        handle_web_download(query)
+    elif data.startswith("web_delete:"):
+        project_id = int(data.split(":")[1])
+        handle_web_delete_project(query)
+    elif data.startswith("web_delete_confirm:"):
+        project_id = int(data.split(":")[1])
+        handle_web_delete_confirm(query, project_id)
+    
+    # ─── قالب‌های آماده ───
+    elif data == "web_templates":
+        handle_web_templates(query)
+    elif data.startswith("use_template:"):
+        template_id = data.split(":")[1]
+        handle_use_template(query, template_id)
+    
+    # ─── اشتراک‌گذاری ───
+    elif data == "web_create_group":
+        handle_web_create_group(query)
+    elif data.startswith("web_share_project:"):
+        project_id = int(data.split(":")[1])
+        handle_web_share_project(query, project_id)
+    elif data.startswith("share_to_group:"):
+        parts = data.split(":")
+        project_id = int(parts[1])
+        group_id = int(parts[2])
+        # ثبت اشتراک در دیتابیس
+        with get_db() as conn:
+            conn.execute(
+                "INSERT INTO web_project_shares (project_id, group_id, permission) VALUES (?, ?, ?)",
+                (project_id, group_id, "view")
+            )
+            conn.commit()
+        send_message(chat_id, "✅ پروژه با گروپ اشتراک شد!")
+    
+    # ─── مانیتورینگ ───
+    elif data.startswith("bot_monitor:"):
+        bot_id = int(data.split(":")[1])
+        handle_bot_monitor(query, bot_id)
+    
+    # ─── پنل سازمانی ───
+    elif data == "enterprise_request":
+        handle_enterprise_request(query)
+    elif data == "enterprise_payment":
+        handle_enterprise_payment(query)
+    
     elif data == "noop":
         pass
     else:
@@ -4462,7 +4619,7 @@ def handle_message(update):
     if st == "deploy_waiting_name":
         handle_deploy_name(message)
 
-    elif st in ("deploy_waiting_file", "deploy_confirm"):
+    elif st in ("deploy_file", "deploy_confirm"):
         if "document" in message:
             handle_deploy_file(message)
         elif text:
@@ -4665,7 +4822,7 @@ def handle_message(update):
             send_message(
                 chat_id,
                 f"✅ کتابخانه اختصاصی *{lib_name}* ذخیره شد!\n🔑 کلید: `{lib_key}`",
-                reply_markup=inline_keyboard([[("🔑 کتابخانه اختصاصی", "custom_lib")]])
+                reply_markup=inline_keyboard([[("🔑 کتاب شخصی", "custom_lib")]])
             )
             clear_state(user_id)
         elif "=" in text:
@@ -4677,7 +4834,6 @@ def handle_message(update):
                     k, v = line.split("=", 1)
                     mappings[k.strip()] = v.strip()
                     added += 1
-            set_state(user_id, "custom_lib_mappings", {**state["data"], "mappings": mappings})
             send_message(chat_id, f"✅ {added} mapping اضافه شد.\nادامه دهید یا «ذخیره» بنویسید.")
         else:
             send_message(chat_id, "❓ mapping را به شکل `نام_سفارشی=نام_اصلی` وارد کنید یا «ذخیره» بنویسید.")
@@ -4752,7 +4908,6 @@ def handle_message(update):
         send_message(chat_id, f"🎪 عنوان: *{text}*\n\nجایزه قرعه‌کشی را وارد کنید:")
 
     elif st == "new_lottery_prize" and is_admin(user_id):
-        set_state(user_id, "new_lottery_min_points", {**state["data"], "prize": text})
         send_message(chat_id, "حداقل امتیاز لازم برای شرکت: (۰ برای همه)")
 
     elif st == "new_lottery_min_points" and is_admin(user_id):
@@ -4774,7 +4929,6 @@ def handle_message(update):
         send_message(chat_id, f"🏆 عنوان: *{text}*\n\nتوضیحات چالش را وارد کنید:")
 
     elif st == "new_challenge_desc" and is_admin(user_id):
-        set_state(user_id, "new_challenge_deadline", {**state["data"], "desc": text})
         send_message(chat_id, "⏰ مهلت (تاریخ، مثال: 2025-04-01) یا «نامحدود»:")
 
     elif st == "new_challenge_deadline" and is_admin(user_id):
@@ -4879,18 +5033,226 @@ def handle_message(update):
 
 
 # ─────────────────────────────────────────────
-#  افزونه‌های جدید و اصلاحات سازگار با نسخه فعلی
+#  قالب‌های آماده - Templates
 # ─────────────────────────────────────────────
-from html import escape as html_escape
 
-_orig_init_db = init_db
-_orig_main_menu = main_menu
-_orig_handle_start = handle_start
-_orig_handle_callback_query = handle_callback_query
-_orig_handle_message = handle_message
-_orig_handle_admin_panel = handle_admin_panel
-_orig_handle_admin_settings = handle_admin_settings
-_orig_handle_user_management = handle_user_management
+WEB_TEMPLATES_DATA = {
+    "blog": {
+        "name": "📰 وبلاگ",
+        "html": '<header><h1>وبلاگ من</h1></header><main><article><h2>پست اول</h2><p>محتوا...</p></article></main>',
+        "css": "body{font-family:Arial;direction:rtl;background:#f5f5f5;}header{background:white;padding:20px;}",
+        "js": "console.log('وبلاگ بارگیری شد!');"
+    },
+    "portfolio": {
+        "name": "💼 پورتفولیو",
+        "html": '<nav><h1>پورتفولیو</h1></nav><section><h2>کارهای من</h2></section>',
+        "css": "body{background:linear-gradient(135deg,#667eea,#764ba2);color:white;}nav{padding:20px;}",
+        "js": "alert('خوش‌آمدید!');"
+    },
+    "landing": {
+        "name": "🚀 فرود",
+        "html": '<header><h1>محصول انقلابی</h1><p>راه‌حل بهترین</p></header><button>شروع کنید</button>',
+        "css": "header{text-align:center;padding:100px;background:#667eea;color:white;}button{padding:10px 30px;}",
+        "js": "document.querySelector('button').onclick=()=>alert('ثبت‌نام!');"
+    }
+}
+
+def handle_web_templates(query: dict):
+    """نمایش قالب‌های آماده"""
+    user_id = query["from"]["id"]
+    chat_id = query["message"]["chat"]["id"]
+    msg_id = query["message"]["message_id"]
+    
+    buttons = [[("🎨 " + v["name"], f"use_template:{k}")] for k, v in WEB_TEMPLATES_DATA.items()]
+    buttons.append([("🔙 بازگشت", "web_assistant_menu")])
+    
+    edit_message(chat_id, msg_id,
+        "🎨 *قالب‌های آماده*\n\nیکی را انتخاب کنید تا پروژه جدید شروع کنید:",
+        reply_markup=inline_keyboard(buttons)
+    )
+
+def handle_use_template(query: dict, template_id: str):
+    """استفاده از قالب"""
+    user_id = query["from"]["id"]
+    chat_id = query["message"]["chat"]["id"]
+    
+    if template_id not in WEB_TEMPLATES_DATA:
+        send_message(chat_id, "❌ قالب یافت نشد!")
+        return
+    
+    set_state(user_id, "web_project_name", {"template": template_id})
+    send_message(chat_id,
+        "✏️ *نام پروژه را وارد کنید*\n\nمثال: پروژه من، وبسایت شرکت"
+    )
+
+# ─────────────────────────────────────────────
+#  اشتراک‌گذاری پروژه - Project Sharing
+# ─────────────────────────────────────────────
+
+def handle_web_create_group(query: dict):
+    """ایجاد گروپ اشتراک"""
+    user_id = query["from"]["id"]
+    chat_id = query["message"]["chat"]["id"]
+    
+    set_state(user_id, "web_group_name")
+    send_message(chat_id,
+        "👥 *نام گروپ را وارد کنید*\n\nمثال: تیم توسعه، دوستان"
+    )
+
+def handle_web_share_project(query: dict, project_id: int):
+    """اشتراک پروژه با گروپ"""
+    user_id = query["from"]["id"]
+    chat_id = query["message"]["chat"]["id"]
+    
+    # دریافت گروپ‌های کاربر
+    with get_db() as conn:
+        groups = conn.execute(
+            "SELECT id, group_name FROM web_groups WHERE owner_id=?",
+            (user_id,)
+        ).fetchall()
+    
+    if not groups:
+        send_message(chat_id, "❌ گروپی ندارید. ابتدا گروپ بسازید!")
+        return
+    
+    buttons = [[("📁 " + g["group_name"], f"share_to_group:{project_id}:{g['id']}")] for g in groups]
+    buttons.append([("🔙 بازگشت", "web_manage_projects")])
+    
+    send_message(chat_id,
+        "🔗 *گروپ را برای اشتراک انتخاب کنید*",
+        reply_markup=inline_keyboard(buttons)
+    )
+
+# ─────────────────────────────────────────────
+#  مانیتورینگ منابع - Resource Monitoring
+# ─────────────────────────────────────────────
+
+def get_bot_resources(bot_id: int) -> dict:
+    """دریافت استفاده از منابع ربات"""
+    try:
+        with get_db() as conn:
+            bot = conn.execute(
+                "SELECT pid FROM deployed_bots WHERE id=?",
+                (bot_id,)
+            ).fetchone()
+        
+        if not bot or not bot["pid"]:
+            return {"cpu": 0, "memory": 0, "status": "متوقف"}
+        
+        pid = bot["pid"]
+        try:
+            with open(f"/proc/{pid}/status", "r") as f:
+                status = f.read()
+                # استخراج VmRSS (حافظه)
+                for line in status.split("\n"):
+                    if "VmRSS" in line:
+                        memory_kb = int(line.split()[1])
+                        memory_mb = memory_kb / 1024
+                        return {"cpu": 0, "memory": memory_mb, "status": "فعال"}
+        except:
+            pass
+        
+        return {"cpu": 0, "memory": 0, "status": "خطا"}
+    except Exception as e:
+        log.error(f"خطا در دریافت منابع ربات: {e}")
+        return {"cpu": 0, "memory": 0, "status": "خطا"}
+
+def handle_bot_monitor(query: dict, bot_id: int):
+    """نمایش مانیتور ربات"""
+    user_id = query["from"]["id"]
+    chat_id = query["message"]["chat"]["id"]
+    msg_id = query["message"]["message_id"]
+    
+    with get_db() as conn:
+        bot = conn.execute(
+            "SELECT bot_name FROM deployed_bots WHERE id=? AND user_id=?",
+            (bot_id, user_id)
+        ).fetchone()
+    
+    if not bot:
+        send_message(chat_id, "❌ ربات یافت نشد!")
+        return
+    
+    resources = get_bot_resources(bot_id)
+    
+    text = (
+        f"📊 *مانیتور: {bot['bot_name']}*\n\n"
+        f"💾 حافظه: *{resources['memory']:.2f} MB*\n"
+        f"⚡ پردازنده: *{resources['cpu']}%*\n"
+        f"🔴 وضعیت: *{resources['status']}*"
+    )
+    
+    edit_message(chat_id, msg_id, text,
+        reply_markup=inline_keyboard([[("🔄 بروزرسانی", f"bot_monitor:{bot_id}"), ("🔙 بازگشت", "bots_menu")]])
+    )
+
+# ─────────────────────────────────────────────
+#  پنل سازمانی - Enterprise Panel
+# ─────────────────────────────────────────────
+
+def handle_enterprise_request(query: dict):
+    """درخواست پنل سازمانی"""
+    user_id = query["from"]["id"]
+    chat_id = query["message"]["chat"]["id"]
+    
+    set_state(user_id, "enterprise_company_name")
+    send_message(chat_id,
+        "🏢 *نام شرکت خود را وارد کنید*\n\nمثال: شرکت فن‌آوری ABC"
+    )
+
+def handle_enterprise_payment(query: dict):
+    """پرداخت برای پنل سازمانی"""
+    user_id = query["from"]["id"]
+    chat_id = query["message"]["chat"]["id"]
+    
+    # قیمت پنل سازمانی
+    amount = 5000000  # ۵ میلیون تومان
+    
+    # درخواست پرداخت
+    payment_payload = {
+        "chat_id": user_id,
+        "amount": amount,
+        "description": "پنل سازمانی کدبات",
+        "payload": f"enterprise_{user_id}"
+    }
+    
+    # ثبت درخواست در دیتابیس
+    with get_db() as conn:
+        conn.execute(
+            "INSERT INTO enterprise_requests (user_id, status, payment_status, payment_amount, created_at) VALUES (?, ?, ?, ?, ?)",
+            (user_id, "pending", "pending", amount, datetime.now().isoformat())
+        )
+        conn.commit()
+    
+    send_message(chat_id,
+        f"💳 *درخواست پنل سازمانی*\n\n"
+        f"مبلغ: *{amount:,} تومان*\n"
+        f"(سال)\n\n"
+        f"✅ مشخصات ثبت شد.\n"
+        f"ادمین‌ها برای تأیید تماس می‌گیرند."
+    )
+
+# ─────────────────────────────────────────────
+#  تابع جدید برای اصلاح ارسال رسانه‌ای
+# ─────────────────────────────────────────────
+
+def _send_media_broadcast(chat_id: int, kind: str, file_id: str, caption: str = ""):
+    """ارسال صحیح رسانه برای broadcast"""
+    payload = {"chat_id": chat_id}
+    if caption:
+        payload["caption"] = caption
+        payload["parse_mode"] = "Markdown"
+    
+    if kind == "photo":
+        return api("sendPhoto", {**payload, "photo": file_id})
+    elif kind == "video":
+        return api("sendVideo", {**payload, "video": file_id})
+    elif kind == "audio":
+        return api("sendAudio", {**payload, "audio": file_id})
+    elif kind == "voice":
+        return api("sendVoice", {**payload, "voice": file_id})
+    else:
+        return send_message(chat_id, caption)
 _orig_handle_admin_user_detail = handle_admin_user_detail
 _orig_handle_challenges = handle_challenges
 _orig_handle_lottery_admin = handle_lottery_admin
@@ -5099,6 +5461,11 @@ def _broadcast_to_all_users(text: str, parse_mode: str = "Markdown", media: dict
     def _send_one(uid: int) -> bool:
         """ارسال یک پیام - برگرداندن True اگر موفق"""
         try:
+            # ✅ اگر کاربر در دیتابیس نبود، ثبت کن
+            user = get_user(uid)
+            if not user:
+                upsert_user(uid, "", "")
+            
             if media:
                 kind = media.get("kind")
                 file_id = media.get("file_id")
@@ -5140,7 +5507,7 @@ def _broadcast_to_all_users(text: str, parse_mode: str = "Markdown", media: dict
                 # اگر خطا خورد، قبل از تلاش بعدی صبر کن
                 if attempt < retries:
                     # backoff تدریجی: 0.2s, 0.5s, 1s
-                    time.sleep(0.2 * (2 ** attempt))
+                    time.sleep(0.2 * (2 * attempt))
             with lock:
                 if success:
                     ok += 1
@@ -5206,13 +5573,26 @@ def main_menu(user_id: int) -> dict:
     buttons = [
         [("🤖 دستیار کد", "assistant_code_menu"), ("🚀 ارتقای پلن", "upgrade_plan_menu")],
         [("🏆 کاربران برتر", "top_users"), ("🎯 امتیازها", "points_menu")],
-        [("🏅 چالش و قرعه‌کشی", "challenge_lottery_menu"), ("🔑 کتابخانه اختصاصی", "custom_lib")],
-        [("📞 ارتباط با تیم کدبات", "contact_team_menu"), ("👤 درباره من", "about_me_menu")],
+        [("🏅 چالش", "challenge_lottery_menu"), ("🔑 کتاب شخصی", "custom_lib")],
+        [("📞 ارتباط", "contact_team_menu"), ("👤 درباره من", "about_me_menu")],
         [("❓ راهنما", "help_guide")],
     ]
     if is_admin(user_id):
         buttons.append([("⚙️ پنل مدیریت", "admin_panel")])
-    return inline_keyboard(buttons)
+    
+    return {"text": (
+        "🎉 *خوش‌آمدی به کدبات!* 🎉\n\n"
+        "این پلتفرم برای ساخت و مدیریت ربات‌های بله طراحی شده است.\n"
+        "شما می‌توانید ربات‌های خود را بسازید، آنها را به صورت خودکار استقرار دهید،\n"
+        "کتابخانه‌های مختلف نصب کنید و در چالش‌های برنامه‌نویسی شرکت کنید تا امتیاز کسب کنید! ✨\n\n"
+        "💡 *برای شروع، یکی از گزینه‌های زیر را انتخاب کنید:*\n"
+        "🤖 *دستیار کد* - ربات، کتابخانه، دستیار وب\n"
+        "🚀 *ارتقای پلن* - فروشگاه، اشتراک، امتیاز\n"
+        "🏅 *چالش* - مسابقات کد و قرعه‌کشی\n"
+        "📞 *ارتباط* - اخبار و پشتیبانی\n"
+        "👤 *درباره من* - آمار و لینک دعوت\n\n"
+        "🎁 *هر عمل = امتیاز! هر امتیاز = جایزه!*"
+    ), "markup": inline_keyboard(buttons)}
 
 def handle_start(message: dict, payload: str = ""):
     user_id = message["from"]["id"]
@@ -5258,9 +5638,9 @@ def handle_admin_panel(query: dict):
     if not is_admin(user_id):
         answer_callback(query["id"], "دسترسی ندارید!", True)
         return
-    edit_message(chat_id, msg_id, "⚙️ *پنل مدیریت*\n\nانتخاب کنید:", reply_markup=inline_keyboard([
-        [("🗂 مدیریت", "admin_manage_menu"), ("💬 ارتباط با کاربران", "admin_communication_menu")],
-        [("🏅 چالش و قرعه‌کشی", "admin_challenge_lottery_menu"), ("📊 آمار", "admin_stats_menu")],
+    edit_message(chat_id, msg_id, "⚙️ *پنل مدیریت سیستم* 🛠️\n\nمدیریت کامل سیستم: کاربران، پرداخت، گزارش‌ها و ویژگی‌ها!\nفقط برای مدیران سیستم.\n\n📌 *یکی از بخش‌های زیر را انتخاب کنید:*", reply_markup=inline_keyboard([
+        [("🗂 مدیریت", "admin_manage_menu"), ("💬 کاربران", "admin_communication_menu")],
+        [("🏅 چالش", "admin_challenge_lottery_menu"), ("📊 آمار", "admin_stats_menu")],
         [("💰 مدیریت پرداخت", "admin_payment_menu"), ("✅ درخواست‌ها", "pending_requests")],
         [("⚙️ تنظیمات", "admin_settings"), ("🔙 بازگشت", "main_menu")]
     ]))
@@ -5278,8 +5658,8 @@ def handle_admin_settings(query: dict):
         f"📢 کانال‌های اجباری: `{current_channels}`\n"
         f"👥 دعوت لازم: `{current_invites}`",
         reply_markup=inline_keyboard([
-            [("📢 مدیریت کانال‌ها", "admin_channels_menu"), ("🔗 تغییر لینک دعوت", "change_invite_base")],
-            [("👥 تعداد نیاز دعوت", "change_required_invites"), ("👤 مدیریت مدیران", "admin_managers_menu")],
+            [("📢 کانال‌ها", "admin_channels_menu"), ("🔗 لینک", "change_invite_base")],
+            [("👥 دعوت", "change_required_invites"), ("👤 مدیریت مدیران", "admin_managers_menu")],
             [("❓ مدیریت راهنما", "admin_edit_help_guide"), ("🔙 پنل مدیریت", "admin_panel")]
         ])
     )
@@ -5377,7 +5757,7 @@ def handle_admin_news_menu(query: dict):
         return
     latest = get_setting("news_content", "هنوز خبری ثبت نشده است.")
     edit_message(chat_id, msg_id, f"📰 *مدیریت اخبار*\n\nآخرین خبر:\n{latest}", reply_markup=inline_keyboard([
-        [("✏️ تغییر اخبار", "admin_edit_news"), ("📣 اخبار به صورت پیام همگانی", "admin_broadcast_news")],
+        [("✏️ تغییر اخبار", "admin_edit_news"), ("📣 پیام", "admin_broadcast_news")],
         [("🔙 پنل مدیریت", "admin_panel")]
     ]))
 
@@ -5427,7 +5807,7 @@ def handle_admin_bots_menu(query: dict):
         return
     edit_message(chat_id, msg_id, "🤖 *مدیریت ربات‌ها*\n\nیکی از گزینه‌ها را انتخاب کنید:", reply_markup=inline_keyboard([
         [("🔍 جستجوی ربات", "admin_search_bot_prompt"), ("📋 لیست ربات‌ها", "admin_bots_list:0")],
-        [("🪄 بازو استور", "admin_bot_store"), ("🔙 پنل مدیریت", "admin_panel")]
+        [("🪄 بازو", "admin_bot_store"), ("🔙 پنل مدیریت", "admin_panel")]
     ]))
 
 def handle_admin_libraries_menu(query: dict):
@@ -5631,7 +6011,7 @@ def handle_bot_store_menu(query: dict):
         answer_callback(query["id"], "ابتدا باید فعال باشید.", True)
         return
     edit_message(chat_id, msg_id, "🪄 *بازو استور*\n\nیکی از گزینه‌ها را انتخاب کنید:", reply_markup=inline_keyboard([
-        [("📝 کاندید کردن بازو", "bot_store_candidate"), ("⭐ بازوهای منتخب", "bot_store_selected")],
+        [("📝 کاندید", "bot_store_candidate"), ("⭐ بازوهای منتخب", "bot_store_selected")],
         [("🔙 بازگشت", "main_menu")]
     ]))
 
@@ -5707,7 +6087,7 @@ def handle_bot_store_description(message: dict):
         f"توضیح: {desc}\n\n"
         f"روی تأیید بزنید:"
     )
-    send_message(message["chat"]["id"], text, reply_markup=inline_keyboard([[("✅ تایید و ارسال به مدیر", "bot_store_submit"), ("❌ انصراف", "bot_store")]]))
+    send_message(message["chat"]["id"], text, reply_markup=inline_keyboard([[("✅ تایید", "bot_store_submit"), ("❌ انصراف", "bot_store")]]))
     return True
 
 
@@ -5909,7 +6289,7 @@ def handle_admin_library_detail(query: dict, lib_id: int):
     )
     edit_message(chat_id, msg_id, text, reply_markup=inline_keyboard([
         [("🗑 حذف کتابخانه", f"admin_delete_library:{lib_id}"), ("👤 صاحب کتابخانه", f"admin_library_owner:{row['user_id']}")],
-        [("🔙 مدیریت کتابخانه‌ها", "admin_libraries_menu")]
+        [("🔙 کتابخانه", "admin_libraries_menu")]
     ]))
 
 def handle_admin_library_delete(query: dict, lib_id: int):
@@ -5924,13 +6304,13 @@ def handle_admin_library_delete(query: dict, lib_id: int):
         answer_callback(query["id"], "یافت نشد!", True)
         return
     try:
-        subprocess.run([sys.executable, "-m", "pip", "uninstall", "-y", row["library_name"], "--break-system-packages"], capture_output=True, text=True, timeout=120)
+        subprocess.run([sys.executable, "-m", "pip", "uninstall", "-y", row["library_name"], "break-system-packages"], capture_output=True, text=True, timeout=120)
     except Exception:
         pass
     with get_db() as conn:
         conn.execute("DELETE FROM library_installs WHERE id=?", (lib_id,))
         conn.commit()
-    edit_message(chat_id, msg_id, "✅ کتابخانه حذف شد.", reply_markup=inline_keyboard([[("🔙 مدیریت کتابخانه‌ها", "admin_libraries_menu")]]))
+    edit_message(chat_id, msg_id, "✅ کتابخانه حذف شد.", reply_markup=inline_keyboard([[("🔙 کتابخانه", "admin_libraries_menu")]]))
 
 def handle_admin_bot_detail(query: dict, bot_id: int):
     admin_id = query["from"]["id"]
@@ -6251,7 +6631,7 @@ def handle_message(update):
 
     if st == "deploy_waiting_name":
         _orig_handle_message(update); return
-    if st in ("deploy_waiting_file", "deploy_confirm", "install_lib_name", "broadcast_waiting_msg",
+    if st in ("deploy_file", "deploy_confirm", "install_lib_name", "broadcast_waiting_msg",
               "admin_search_user", "reject_deploy_reason", "reject_lib_reason",
               "admin_gift_points", "admin_send_user_msg", "admin_deduct_points",
               "admin_change_plan", "submit_challenge", "new_lottery_title", "new_lottery_prize",
@@ -6318,12 +6698,424 @@ def handle_assistant_code_menu(query: dict):
     user_id = query["from"]["id"]
     chat_id = query["message"]["chat"]["id"]
     msg_id = query["message"]["message_id"]
-    edit_message(chat_id, msg_id, "🤖 *دستیار کد*\n\nانتخاب کنید:", reply_markup=inline_keyboard([
-        [("🤖 مدیریت ربات‌ها", "bots_menu"), ("🚀 استقرار ربات جدید", "deploy_new")],
-        [("📦 نصب کتابخانه", "install_lib"), ("🔑 کتابخانه اختصاصی", "custom_lib")],
-        [("🪄 بازو استور", "bot_store")],
-        [("🔙 بازگشت", "main_menu")]
-    ]))
+    u = get_user(user_id)
+    plan = u["plan"] if u else "free"
+    
+    # بررسی فعال بودن دستیار وب
+    can_use_web_assistant = PLANS[plan].get("web_assistant", False)
+    
+    buttons = [
+        [("🤖 ربات‌ها", "bots_menu"), ("🚀 استقرار", "deploy_new")],
+        [("📦 کتابخانه", "install_lib"), ("🔑 کتاب شخصی", "custom_lib")],
+    ]
+    
+    # دکمه دستیار وب برای کاربران Basic و بالاتر
+    if can_use_web_assistant:
+        buttons.append([("🎨 وب دستیار", "web_assistant_menu")])
+    else:
+        buttons.append([("🎨 وب (پایه+)", "upgrade_plan_menu")])
+    
+    buttons.extend([
+        [("🪄 بازو", "bot_store")],
+        [("🔙 __ بازگشت", "main_menu")]
+    ])
+    
+    edit_message(chat_id, msg_id, "🤖 *دستیار کد* 💻\n\nاینجا می‌توانید ربات‌ها را مدیریت کنید،\nکتابخانه‌ها نصب کنید و وب‌سایت بسازید!\n\n📌 *یکی را انتخاب کنید:*", reply_markup=inline_keyboard(buttons))
+
+
+def handle_assistant_code_menu(query: dict):
+    user_id = query["from"]["id"]
+    chat_id = query["message"]["chat"]["id"]
+    msg_id = query["message"]["message_id"]
+    u = get_user(user_id)
+    plan = u["plan"] if u else "free"
+    
+    # بررسی فعال بودن دستیار وب
+    can_use_web_assistant = PLANS[plan].get("web_assistant", False)
+    
+    buttons = [
+        [("🤖 ربات‌ها", "bots_menu"), ("🚀 استقرار", "deploy_new")],
+        [("📦 کتابخانه", "install_lib"), ("🔑 کتاب شخصی", "custom_lib")],
+    ]
+    
+    # دکمه دستیار وب برای کاربران Basic و بالاتر
+    if can_use_web_assistant:
+        buttons.append([("🎨 وب دستیار", "web_assistant_menu")])
+    else:
+        buttons.append([("🎨 وب (پایه+)", "upgrade_plan_menu")])
+    
+    buttons.extend([
+        [("🪄 بازو", "bot_store")],
+        [("🔙 __ بازگشت", "main_menu")]
+    ])
+    
+    edit_message(chat_id, msg_id, "🤖 *دستیار کد* 💻\n\nاینجا می‌توانید ربات‌ها را مدیریت کنید،\nکتابخانه‌ها نصب کنید و وب‌سایت بسازید!\n\n📌 *یکی را انتخاب کنید:*", reply_markup=inline_keyboard(buttons))
+
+
+# ─────────────────────────────────────────────
+#  دستیار HTML/CSS/JS برای کسانی که کد بلد نیستند
+# ─────────────────────────────────────────────
+
+def handle_web_assistant_menu(query: dict):
+    """منوی اصلی دستیار وب"""
+    user_id = query["from"]["id"]
+    chat_id = query["message"]["chat"]["id"]
+    msg_id = query["message"]["message_id"]
+    u = get_user(user_id)
+    
+    # شمارش پروژه‌های موجود
+    with get_db() as conn:
+        proj_count = conn.execute(
+            "SELECT COUNT(*) as c FROM web_projects WHERE user_id=?", 
+            (user_id,)
+        ).fetchone()["c"]
+    
+    plan = u["plan"]
+    max_projects = PLANS[plan].get("max_web_projects", 0)
+    
+    status_text = f"📊 پروژه‌های شما: *{proj_count}*"
+    if max_projects > 0:
+        status_text += f" از {max_projects}"
+    elif max_projects == -1:
+        status_text += " (بی‌محدود)"
+    
+    buttons = [
+        [("➕ جدید", "web_new_project"), ("📂 پروژه‌ها", "web_manage_projects")],
+        [("🎓 __ راهنما", "web_tutorial"), ("💡 __ نمونه‌ها", "web_examples")],
+        [("🔙 __ بازگشت", "assistant_code_menu")]
+    ]
+    
+    edit_message(
+        chat_id, msg_id,
+        f"🎨 *دستیار HTML/CSS/JS*\n\n{status_text}\n\n"
+        f"برای کسانی که کدنویسی بلد نیستند! 😊",
+        reply_markup=inline_keyboard(buttons)
+    )
+
+
+def handle_web_manage_projects(query: dict):
+    """مدیریت پروژه‌های موجود"""
+    user_id = query["from"]["id"]
+    chat_id = query["message"]["chat"]["id"]
+    msg_id = query["message"]["message_id"]
+    
+    with get_db() as conn:
+        projects = conn.execute(
+            "SELECT id, project_name FROM web_projects WHERE user_id=? ORDER BY updated_at DESC",
+            (user_id,)
+        ).fetchall()
+    
+    if not projects:
+        edit_message(
+            chat_id, msg_id,
+            "📂 *مدیریت پروژه‌ها*\n\nهیچ پروژه‌ای ندارید! 📭\n\nپروژه جدید بسازید و شروع کنید! 🎨",
+            reply_markup=inline_keyboard([[("➕ جدید", "web_new_project"), ("🔙", "web_assistant_menu")]])
+        )
+        return
+    
+    buttons = []
+    for proj in projects:
+        buttons.append([(f"📁 {proj['project_name']}", f"web_edit_project:{proj['id']}")])
+    
+    buttons.append([("➕ جدید", "web_new_project")])
+    buttons.append([("🔙 بازگشت", "web_assistant_menu")])
+    
+    edit_message(
+        chat_id, msg_id,
+        "📂 *مدیریت پروژه‌ها*\n\nپروژه‌های شما و ویرایش آنها:\n\nیکی را برای ویرایش انتخاب کنید:",
+        reply_markup=inline_keyboard(buttons)
+    )
+
+
+def handle_web_new_project(query: dict):
+    """نوع پروژه جدید را انتخاب کن"""
+    user_id = query["from"]["id"]
+    chat_id = query["message"]["chat"]["id"]
+    msg_id = query["message"]["message_id"]
+    u = get_user(user_id)
+    plan = u["plan"]
+    
+    # بررسی محدودیت
+    max_projects = PLANS[plan].get("max_web_projects", 0)
+    if max_projects == 0:
+        edit_message(chat_id, msg_id,
+            "❌ *محدودیت پلن شما*\n\n"
+            "شما می‌توانید پروژه وب بسازید! 😊\n"
+            "برای شروع، پلن خود را ارتقا دهید.\n\n"
+            "🚀 *پلن Basic* - ۳ پروژه\n"
+            "🚀 *پلن Professional* - نامحدود",
+            reply_markup=inline_keyboard([[("💳 ارتقا", "upgrade_plan_menu"), ("🔙", "web_assistant_menu")]])
+        )
+        return
+    
+    # شمارش پروژه‌های موجود
+    with get_db() as conn:
+        proj_count = conn.execute(
+            "SELECT COUNT(*) as c FROM web_projects WHERE user_id=?",
+            (user_id,)
+        ).fetchone()["c"]
+    
+    if proj_count >= max_projects:
+        edit_message(chat_id, msg_id,
+            f"❌ *محدودیت پروژه رسید*\n\n"
+            f"شما {proj_count} پروژه دارید و حداکثر {max_projects} مجاز است.\n\n"
+            f"🗑 یک پروژه قدیم را حذف کنید یا پلن را ارتقا دهید.",
+            reply_markup=inline_keyboard([[("💳 ارتقا", "upgrade_plan_menu"), ("🔙", "web_manage_projects")]])
+        )
+        return
+    
+    # انتخاب نوع پروژه
+    buttons = [
+        [("🏠 ساده", "web_template:simple"), ("🎨 با سبک", "web_template:styled")],
+        [("⚙️ تعاملی", "web_template:interactive")],
+        [("🔙 بازگشت", "web_manage_projects")]
+    ]
+    
+    edit_message(chat_id, msg_id,
+        "🎨 *ساخت پروژه جدید*\n\n"
+        "نوع پروژه را انتخاب کنید:\n\n"
+        "🏠 *ساده* - فقط HTML\n"
+        "🎨 *با سبک* - HTML + CSS زیبا\n"
+        "⚙️ *تعاملی* - HTML + CSS + JavaScript",
+        reply_markup=inline_keyboard(buttons)
+    )
+
+
+def handle_web_new_project_with_template(query: dict, template_type: str):
+    """ایجاد پروژه جدید با template"""
+    user_id = query["from"]["id"]
+    chat_id = query["message"]["chat"]["id"]
+    msg_id = query["message"]["message_id"]
+    
+    # درخواست نام پروژه
+    set_state(user_id, "web_project_name", {"template": template_type})
+    edit_message(chat_id, msg_id,
+        "✏️ *نام پروژه را وارد کنید*\n\n"
+        "نام باید بین ۲ تا ۳۰ کاراکتر باشد.\n"
+        "مثال: *پورتفولیو من*، *وب‌سایت فروشگاه*، و غیره",
+        reply_markup=inline_keyboard([[("🔙 بازگشت", "web_new_project")]])
+    )
+
+
+def handle_web_edit_project(query: dict, project_id: int):
+    """ویرایش پروژه موجود"""
+    user_id = query["from"]["id"]
+    chat_id = query["message"]["chat"]["id"]
+    msg_id = query["message"]["message_id"]
+    
+    with get_db() as conn:
+        proj = conn.execute(
+            "SELECT * FROM web_projects WHERE id=? AND user_id=?",
+            (project_id, user_id)
+        ).fetchone()
+    
+    if not proj:
+        send_message(chat_id, "❌ پروژه یافت نشد!")
+        return
+    
+    buttons = [
+        [("📄 HTML", "web_edit_html"), ("🎨 CSS", "web_edit_css")],
+        [("⚙️ JS", "web_edit_js"), ("👁️ پیش‌نمایش", "web_preview")],
+        [("📥 دانلود", "web_download"), ("🗑 حذف", "web_delete")],
+        [("🔙 بازگشت", "web_manage_projects")]
+    ]
+    
+    set_state(user_id, "web_editing", {"project_id": project_id})
+    
+    edit_message(chat_id, msg_id,
+        f"📁 *{proj['project_name']}*\n\n"
+        f"قسمت مورد نظر را برای ویرایش انتخاب کنید:\n\n"
+        f"📄 *HTML* - ساختار صفحه\n"
+        f"🎨 *CSS* - رنگ و شکل\n"
+        f"⚙️ *JavaScript* - تعاملات",
+        reply_markup=inline_keyboard(buttons)
+    )
+
+
+def handle_web_edit_html(query: dict):
+    """ویرایش HTML بدون کد - دکمه‌های کمکی"""
+    user_id = query["from"]["id"]
+    chat_id = query["message"]["chat"]["id"]
+    msg_id = query["message"]["message_id"]
+    
+    buttons = [
+        [("📝 متن", "web_add_text"), ("🖼️ عکس", "web_add_image")],
+        [("🎬 فیلم", "web_add_video"), ("🔊 صوت", "web_add_audio")],
+        [("📚 عنوان", "web_add_heading"), ("📋 لیست", "web_add_list")],
+        [("🔗 لینک", "web_add_link"), ("🔲 جدول", "web_add_table")],
+        [("✏️ کد خام", "web_edit_html_code")],
+        [("🔙 بازگشت", "web_edit_project")]
+    ]
+    
+    edit_message(chat_id, msg_id,
+        "📄 *ویرایش HTML*\n\n"
+        "برای کسانی که کد بلد نیستند! 🎯\n\n"
+        "دکمه مورد نظر را زنید تا عنصر اضافه کنید:",
+        reply_markup=inline_keyboard(buttons)
+    )
+
+
+def handle_web_add_text(query: dict):
+    """افزودن متن"""
+    user_id = query["from"]["id"]
+    set_state(user_id, "web_add_text")
+    send_message(query["message"]["chat"]["id"],
+        "📝 *افزودن متن*\n\n"
+        "متن مورد نظر را بنویسید:\n"
+        "مثال: سلام، این یک متن ساده است!"
+    )
+
+
+def handle_web_edit_css(query: dict):
+    """ویرایش CSS بدون کد"""
+    user_id = query["from"]["id"]
+    chat_id = query["message"]["chat"]["id"]
+    msg_id = query["message"]["message_id"]
+    
+    buttons = [
+        [("🌈 رنگ", "web_css_color"), ("↔️ فاصله", "web_css_spacing")],
+        [("🔤 فونت", "web_css_font"), ("⬜ پس‌زمینه", "web_css_background")],
+        [("📐 سایز", "web_css_size"), ("🔳 حدود", "web_css_border")],
+        [("✏️ کد خام", "web_edit_css_code")],
+        [("🔙 بازگشت", "web_edit_project")]
+    ]
+    
+    edit_message(chat_id, msg_id,
+        "🎨 *ویرایش CSS (زیبایی)*\n\n"
+        "عنصر مورد نظر را انتخاب کنید:",
+        reply_markup=inline_keyboard(buttons)
+    )
+
+
+def handle_web_edit_js(query: dict):
+    """ویرایش JavaScript"""
+    user_id = query["from"]["id"]
+    chat_id = query["message"]["chat"]["id"]
+    msg_id = query["message"]["message_id"]
+    
+    buttons = [
+        [("🖱️ کلیک", "web_js_click"), ("📨 فرم", "web_js_form")],
+        [("⏰ تایمر", "web_js_timer"), ("💬 پیام", "web_js_alert")],
+        [("✏️ کد خام", "web_edit_js_code")],
+        [("🔙 بازگشت", "web_edit_project")]
+    ]
+    
+    edit_message(chat_id, msg_id,
+        "⚙️ *ویرایش JavaScript (تعاملات)*\n\n"
+        "عنصر تعاملی را انتخاب کنید:",
+        reply_markup=inline_keyboard(buttons)
+    )
+
+
+def handle_web_preview(query: dict):
+    """نمایش پیش‌نمایش پروژه"""
+    user_id = query["from"]["id"]
+    state = get_state(user_id)
+    project_id = state.get("data", {}).get("project_id")
+    
+    if not project_id:
+        send_message(query["message"]["chat"]["id"], "❌ پروژه یافت نشد!")
+        return
+    
+    with get_db() as conn:
+        proj = conn.execute(
+            "SELECT * FROM web_projects WHERE id=? AND user_id=?",
+            (project_id, user_id)
+        ).fetchone()
+    
+    # ترکیب کدها
+    full_html = f"""<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{proj['project_name']}</title>
+    <style>
+        {proj['css_code']}
+    </style>
+</head>
+<body>
+    {proj['html_code']}
+    <script>
+        {proj['js_code']}
+    </script>
+</body>
+</html>"""
+    
+    # ذخیره فایل موقت
+    preview_path = LOGS_DIR / f"web_preview_{project_id}.html"
+    with open(preview_path, "w", encoding="utf-8") as f:
+        f.write(full_html)
+    
+    send_message(query["message"]["chat"]["id"],
+        f"👁️ *پیش‌نمایش: {proj['project_name']}*\n\n"
+        f"فایل HTML به شما ارسال شد. برای باز کردن دانلود کنید.",
+        reply_markup=inline_keyboard([[("📥 دانلود HTML", f"web_download_preview:{project_id}")]])
+    )
+
+
+def handle_web_download(query: dict):
+    """دانلود پروژه"""
+    user_id = query["from"]["id"]
+    state = get_state(user_id)
+    project_id = state.get("data", {}).get("project_id")
+    
+    if not project_id:
+        send_message(query["message"]["chat"]["id"], "❌ پروژه یافت نشد!")
+        return
+    
+    with get_db() as conn:
+        proj = conn.execute(
+            "SELECT * FROM web_projects WHERE id=? AND user_id=?",
+            (project_id, user_id)
+        ).fetchone()
+    
+    buttons = [
+        [("📦 ZIP", f"web_download_zip:{project_id}"), ("📄 HTML", f"web_download_html:{project_id}")],
+        [("🔙 بازگشت", "web_edit_project")]
+    ]
+    
+    edit_message(query["message"]["chat"]["id"],
+        query["message"]["message_id"],
+        f"📥 *دانلود {proj['project_name']}*\n\n"
+        f"فرمت دانلود را انتخاب کنید:\n\n"
+        f"📦 *ZIP* - HTML، CSS، JS جدا\n"
+        f"📄 *HTML* - همه در یک فایل",
+        reply_markup=inline_keyboard(buttons)
+    )
+
+
+def handle_web_delete_project(query: dict):
+    """حذف پروژه (تایید دوبار)"""
+    user_id = query["from"]["id"]
+    state = get_state(user_id)
+    project_id = state.get("data", {}).get("project_id")
+    
+    edit_message(query["message"]["chat"]["id"],
+        query["message"]["message_id"],
+        "⚠️ *حذف پروژه*\n\n"
+        "آیا مطمئن هستید؟ این عمل برگشت‌ناپذیر است! 🗑️\n\n"
+        "تمام فایل‌ها برای همیشه حذف می‌شوند.",
+        reply_markup=inline_keyboard([
+            [("✅ بله، حذف کن", f"web_delete_confirm:{project_id}"), ("❌ منصرف شدم", "web_edit_project")]
+        ])
+    )
+
+
+def handle_web_delete_confirm(query: dict, project_id: int):
+    """تایید حذف پروژه"""
+    user_id = query["from"]["id"]
+    
+    with get_db() as conn:
+        conn.execute("DELETE FROM web_projects WHERE id=? AND user_id=?", (project_id, user_id))
+        conn.commit()
+    
+    edit_message(query["message"]["chat"]["id"],
+        query["message"]["message_id"],
+        "✅ *پروژه حذف شد*\n\n"
+        "پروژه شما با موفقیت حذف شد.",
+        reply_markup=inline_keyboard([[("📂 پروژه‌ها", "web_manage_projects")]])
+    )
 
 
 def handle_upgrade_plan_menu(query: dict):
@@ -6333,18 +7125,18 @@ def handle_upgrade_plan_menu(query: dict):
     u = get_user(user_id)
     points = u["points"] if u else 0
     edit_message(chat_id, msg_id, f"🚀 *ارتقای پلن*\n\n💰 امتیاز شما: *{points}*\n\nانتخاب کنید:", reply_markup=inline_keyboard([
-        [("🏪 فروشگاه آیتم", "shop_menu"), ("💳 خرید اشتراک", "sub_menu")],
-        [("🎯 امتیازها", "points_menu")],
-        [("🔙 بازگشت", "main_menu")]
+        [("🏪 فروشگاه", "shop_menu"), ("💳 اشتراک", "sub_menu")],
+        [("🎯 __ امتیازها", "points_menu")],
+        [("🔙 __ بازگشت", "main_menu")]
     ]))
 
 
-def handle_challenge_lottery_menu(query: dict):
+
     """زیرمنوی چالش و قرعه‌کشی برای کاربر"""
     user_id = query["from"]["id"]
     chat_id = query["message"]["chat"]["id"]
     msg_id = query["message"]["message_id"]
-    edit_message(chat_id, msg_id, "🏅 *چالش و قرعه‌کشی*\n\nانتخاب کنید:", reply_markup=inline_keyboard([
+    edit_message(chat_id, msg_id, "🏅 *چالش‌های کد و قرعه‌کشی* 🎯\n\nدر مسابقات برنامه‌نویسی شرکت کنید و جوایز بگیرید!\nهر چالش حل‌شده = امتیاز و جایزه!\n\n📌 *انتخاب کنید:*", reply_markup=inline_keyboard([
         [("🎟 چالش‌های کد", "challenges"), ("🎪 قرعه‌کشی", "lottery_menu")],
         [("🔙 بازگشت", "main_menu")]
     ]))
@@ -6355,7 +7147,7 @@ def handle_contact_team_menu(query: dict):
     user_id = query["from"]["id"]
     chat_id = query["message"]["chat"]["id"]
     msg_id = query["message"]["message_id"]
-    edit_message(chat_id, msg_id, "📞 *ارتباط با تیم کدبات*\n\nانتخاب کنید:", reply_markup=inline_keyboard([
+    edit_message(chat_id, msg_id, "📞 *ارتباط با تیم کدبات* 💬\n\nآخرین اخبار، پرسش‌های متداول و پشتیبانی مستقیم!\nما ۲۴/۷ برای کمک به شما اینجا هستیم.\n\n📌 *انتخاب کنید:*", reply_markup=inline_keyboard([
         [("📰 اخبار", "news_main"), ("ℹ️ درباره ما", "about_main")],
         [("🎫 تیکت پشتیبانی", "ticket_menu")],
         [("🔙 بازگشت", "main_menu")]
@@ -6419,9 +7211,9 @@ def handle_admin_manage_menu(query: dict):
     if not is_admin(admin_id):
         return
     edit_message(chat_id, msg_id, "🗂 *مدیریت*\n\nانتخاب کنید:", reply_markup=inline_keyboard([
-        [("📰 مدیریت اخبار", "admin_news_menu"), ("ℹ️ مدیریت درباره ما", "admin_about_menu")],
-        [("🤖 مدیریت ربات‌ها", "admin_bots_menu"), ("📦 مدیریت کتابخانه‌ها", "admin_libraries_menu")],
-        [("👥 مدیریت کاربران", "user_management"), ("🪄 مدیریت بازو استور", "admin_bot_store")],
+        [("📰 مدیریت اخبار", "admin_news_menu"), ("ℹ️ درباره", "admin_about_menu")],
+        [("🤖 ربات‌ها", "admin_bots_menu"), ("📦 کتابخانه", "admin_libraries_menu")],
+        [("👥 مدیریت کاربران", "user_management"), ("🪄 بازو", "admin_bot_store")],
         [("💳 مدیریت اشتراک", "subscription_mgmt"), ("❓ مدیریت راهنما", "admin_edit_help_guide")],
         [("🔙 پنل مدیریت", "admin_panel")]
     ]))
@@ -6447,7 +7239,7 @@ def handle_admin_challenge_lottery_menu(query: dict):
     msg_id = query["message"]["message_id"]
     if not is_admin(admin_id):
         return
-    edit_message(chat_id, msg_id, "🏅 *چالش و قرعه‌کشی*\n\nانتخاب کنید:", reply_markup=inline_keyboard([
+    edit_message(chat_id, msg_id, "🏅 *چالش‌های کد و قرعه‌کشی* 🎯\n\nدر مسابقات برنامه‌نویسی شرکت کنید و جوایز بگیرید!\nهر چالش حل‌شده = امتیاز و جایزه!\n\n📌 *انتخاب کنید:*", reply_markup=inline_keyboard([
         [("🏆 چالش‌های کد", "challenge_admin"), ("🎪 قرعه‌کشی", "lottery_admin")],
         [("🔙 پنل مدیریت", "admin_panel")]
     ]))
@@ -6635,6 +7427,10 @@ def handle_callback_query(update: dict):
     # ── زیرمنوهای جدید منوی اصلی ──
     if data == "assistant_code_menu":
         handle_assistant_code_menu(query); return
+    if data == "web_assistant_menu":
+        handle_web_assistant_menu(query); return
+    if data == "web_manage_projects":
+        handle_web_manage_projects(query); return
     if data == "upgrade_plan_menu":
         handle_upgrade_plan_menu(query); return
     if data == "challenge_lottery_menu":
@@ -6750,6 +7546,108 @@ def main():
         except Exception as e:
             log.error(f"خطای اصلی: {e}")
             time.sleep(5)
+
+
+# ─────────────────────────────────────────────
+#  State Handlers برای ویژگی‌های جدید
+# ─────────────────────────────────────────────
+
+def _handle_web_project_name(user_id: int, text: str, chat_id: int):
+    """دریافت نام پروژه برای قالب"""
+    state = get_state(user_id)
+    template = state.get("data", {}).get("template", "")
+    
+    if not (2 <= len(text) <= 30):
+        send_message(chat_id, "❌ نام باید ۲-۳۰ کاراکتر باشد!")
+        return
+    
+    if template and template in WEB_TEMPLATES_DATA:
+        tmpl = WEB_TEMPLATES_DATA[template]
+        # ایجاد پروژه جدید با قالب
+        with get_db() as conn:
+            conn.execute(
+                "INSERT INTO web_projects (user_id, project_name, html_code, css_code, js_code, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                (user_id, text, tmpl["html"], tmpl["css"], tmpl["js"], datetime.now().isoformat(), datetime.now().isoformat())
+            )
+            conn.commit()
+        
+        send_message(chat_id, f"✅ پروژه *{text}* از قالب *{tmpl['name']}* ایجاد شد!")
+    
+    clear_state(user_id)
+
+def _handle_web_group_name(user_id: int, text: str, chat_id: int):
+    """دریافت نام گروپ اشتراک"""
+    if not (2 <= len(text) <= 30):
+        send_message(chat_id, "❌ نام گروپ باید ۲-۳۰ کاراکتر باشد!")
+        return
+    
+    with get_db() as conn:
+        conn.execute(
+            "INSERT INTO web_groups (owner_id, group_name, created_at, updated_at) VALUES (?, ?, ?, ?)",
+            (user_id, text, datetime.now().isoformat(), datetime.now().isoformat())
+        )
+        conn.commit()
+    
+    send_message(chat_id, f"✅ گروپ *{text}* ایجاد شد!")
+    clear_state(user_id)
+
+def _handle_enterprise_company_name(user_id: int, text: str, chat_id: int):
+    """دریافت نام شرکت برای پنل سازمانی"""
+    set_state(user_id, "enterprise_description", {"company_name": text})
+    send_message(chat_id,
+        "📝 *توضیح درباره شرکت و نیاز خود*\n\n"
+        "مثال: شرکتی که سافت‌وری توسعه می‌دهد..."
+    )
+
+def _handle_enterprise_description(user_id: int, text: str, chat_id: int):
+    """دریافت توضیح پنل سازمانی"""
+    state = get_state(user_id)
+    company_name = state.get("data", {}).get("company_name", "")
+    
+    set_state(user_id, "enterprise_user_count", {
+        "company_name": company_name,
+        "description": text
+    })
+    send_message(chat_id,
+        "👥 *تعداد کاربران مورد نیاز*\n\n"
+        "عدد را وارد کنید (مثال: ۵۰)"
+    )
+
+def _handle_enterprise_user_count(user_id: int, text: str, chat_id: int):
+    """دریافت تعداد کاربران"""
+    try:
+        user_count = int(text)
+        if user_count < 1:
+            send_message(chat_id, "❌ تعداد باید بیشتر از صفر باشد!")
+            return
+    except ValueError:
+        send_message(chat_id, "❌ لطفاً یک عدد وارد کنید!")
+        return
+    
+    state = get_state(user_id)
+    data = state.get("data", {})
+    
+    # محاسبه قیمت
+    base_price = 5000000
+    price_per_user = 100000
+    total_price = base_price + (user_count * price_per_user)
+    
+    with get_db() as conn:
+        conn.execute(
+            "UPDATE enterprise_requests SET company_name=?, description=?, user_count=?, payment_amount=? WHERE user_id=? AND status='pending'",
+            (data.get("company_name"), data.get("description"), user_count, total_price, user_id)
+        )
+        conn.commit()
+    
+    send_message(chat_id,
+        f"💳 *خلاصه درخواست*\n\n"
+        f"شرکت: *{data.get('company_name')}*\n"
+        f"کاربران: *{user_count}*\n"
+        f"مبلغ: *{total_price:,} تومان*\n\n"
+        f"برای پرداخت دکمه را بزنید:",
+        reply_markup=inline_keyboard([[("💳 پرداخت", "enterprise_payment"), ("❌ انصراف", "main_menu")]])
+    )
+    clear_state(user_id)
 
 
 if __name__ == "__main__":
