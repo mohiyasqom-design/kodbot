@@ -9,7 +9,7 @@
 [![Open Source](https://img.shields.io/badge/Open%20Source-❤️-red?style=for-the-badge)](https://opensource.org/)
 [![Active Development](https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
-[![Codebase](https://img.shields.io/badge/Codebase-8%2C000%2B%20Lines-blue?style=for-the-badge)]()
+[![Codebase](https://img.shields.io/badge/Codebase-13%2C000%2B%20Lines-blue?style=for-the-badge)](https://github.com/USERNAME/kodbot/blob/main/kodbot_poro_max.py)
 
 <br/>
 
